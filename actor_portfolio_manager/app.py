@@ -4,6 +4,7 @@ import os
 from flask_login import UserMixin, login_user, logout_user, LoginManager, login_required, current_user
 import bcrypt
 import subprocess
+import logging
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -19,21 +20,31 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'jacobgiangiulio@gmail.com'
 app.config['MAIL_PASSWORD'] = 'qpex bdeg hvca sjzu'
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
 mail = Mail(app)
 
 # Path for static content
 STATIC_FOLDER = 'static'
 headshot_folder = os.path.join(STATIC_FOLDER, 'headshots')
+
 # Ensure the headshots directory exists
 if not os.path.exists(headshot_folder):
+    logging.info(f"Creating directory: {headshot_folder}")
     os.makedirs(headshot_folder)
+
+# Log the contents of the headshots directory
+logging.info(f"Contents of {headshot_folder}: {os.listdir(headshot_folder)}")
 
 # Ensure there are placeholder files if the directory is empty
 if not os.listdir(headshot_folder):
+    logging.info(f"Directory {headshot_folder} is empty. Adding placeholder file.")
     with open(os.path.join(headshot_folder, 'placeholder.jpg'), 'w') as f:
         f.write('')  # Create an empty placeholder file
-        
+
 headshots = [f for f in os.listdir(headshot_folder) if f.endswith(('jpg', 'jpeg', 'png'))]
+logging.info(f"Headshots found: {headshots}")
 
 # User model
 class User(UserMixin):
