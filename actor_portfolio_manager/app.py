@@ -24,6 +24,15 @@ mail = Mail(app)
 # Path for static content
 STATIC_FOLDER = 'static'
 headshot_folder = os.path.join(STATIC_FOLDER, 'headshots')
+# Ensure the headshots directory exists
+if not os.path.exists(headshot_folder):
+    os.makedirs(headshot_folder)
+
+# Ensure there are placeholder files if the directory is empty
+if not os.listdir(headshot_folder):
+    with open(os.path.join(headshot_folder, 'placeholder.jpg'), 'w') as f:
+        f.write('')  # Create an empty placeholder file
+        
 headshots = [f for f in os.listdir(headshot_folder) if f.endswith(('jpg', 'jpeg', 'png'))]
 
 # User model
