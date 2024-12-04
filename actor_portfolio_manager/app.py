@@ -66,6 +66,10 @@ def load_user(user_id):
 def home():
     return render_template('index.html', headshots=headshots)
 
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory(STATIC_FOLDER, filename)
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
