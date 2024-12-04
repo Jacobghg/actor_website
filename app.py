@@ -5,6 +5,11 @@ from flask_login import UserMixin, login_user, logout_user, LoginManager, login_
 import bcrypt
 import subprocess
 
+from dotenv import load_dotenv
+
+#load environemnt variables
+load_dotenv()
+
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 
@@ -16,8 +21,9 @@ login_manager.init_app(app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'jacobgiangiulio@gmail.com'
-app.config['MAIL_PASSWORD'] = 'qpex bdeg hvca sjzu'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+
 
 mail = Mail(app)
 
@@ -71,7 +77,8 @@ def resume():
 
 @app.route('/demo-reel')
 def demo_reel():
-    return render_template('demo_reel.html', video_path=url_for('static', filename='videos/demo_reel.mp4'))
+    video_url = "https://www.dropbox.com/scl/fi/bu6os0bzyeokn7ri15533/demo_reel.mp4?rlkey=af6vss7s4uomjs3j61fk2ddxm&st=6hhn3ufr&dl=0"
+    return render_template('demo_reel.html', video_url=video_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
