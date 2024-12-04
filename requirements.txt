@@ -1,4 +1,4 @@
 Flask
 Flask-Mail
 reportlab  # If you added PDF generation
-pip freeze > requirements.txt
+pip3 freeze > requirements.txt
