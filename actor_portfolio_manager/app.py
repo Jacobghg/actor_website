@@ -71,7 +71,8 @@ def resume():
 
 @app.route('/demo-reel')
 def demo_reel():
-    return render_template('demo_reel.html', video_path=url_for('static', filename='videos/demo_reel.mp4'))
+    video_url = "https://www.dropbox.com/scl/fi/bu6os0bzyeokn7ri15533/demo_reel.mp4?rlkey=af6vss7s4uomjs3j61fk2ddxm&st=6hhn3ufr&dl=0"
+    return render_template('demo_reel.html', video_url=video_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
