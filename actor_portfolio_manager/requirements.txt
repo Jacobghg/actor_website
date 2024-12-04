@@ -1,3 +1,6 @@
 Flask
 Flask-Mail
+Flask-Login
+bcrypt
+gunicorn
 reportlab  # If you added PDF generation
